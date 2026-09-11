@@ -4,6 +4,10 @@
 
 这是一个**纯 Markdown 的个人 Skill 集合仓库**，没有任何代码构建、测试或 lint 流程。所有"开发"工作都是编写和维护 skill 文档。提交信息使用中文，遵循仓库现有风格。
 
+## GitHub 访问方式
+
+访问 GitHub（查询 repo、release、issue、PR 等）时，**优先使用本地安装的 `gh` 命令行工具**，默认断言其处于登录状态，无需事先检查认证。如果某次 `gh` 调用失败，先检查命令本身（参数、网络等）并重试；重试两次后仍失败，才回退到直接调用 GitHub API（如 `Invoke-RestMethod https://api.github.com/...`）。
+
 ## 常用命令
 
 ### 校验 skill 结构与 frontmatter
