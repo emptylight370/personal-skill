@@ -2,6 +2,8 @@
 
 个人 Skill 仓库，用于存放我在日常工作中沉淀下来的各类 Skill。每个 Skill 独立存放在一个单独的文件夹中，文件夹名称即为该 Skill 的名称，内部通常包含 `SKILL.md`（Skill 定义与说明）以及 `references/`、`scripts/` 等辅助目录。
 
+各 Skill 的设计文档统一存放在 [docs/](./docs) 目录（文件名用对应 skill 名），不随 skill 本身分发。
+
 ## 获取 Skill
 
 ### 稀疏检出（sparse-checkout）
@@ -52,6 +54,10 @@ cp -r /tmp/personal-skill/siyuan-skill <project>/.agents/skills/
 后续更新时重复上述操作即可：先 `git -C /tmp/personal-skill pull` 更新临时仓库，再覆盖复制到项目的 skill 目录。
 
 ## Skill 列表
+
+### [issue-triage](./issue-triage)
+
+对 GitHub 仓库的 issue 进行分诊与处置：拉取列表、生成摘要与初步分类建议、呈现决策卡片，由用户开放性决定处置方式（自行修改或指导 agent 修改）后执行（改码 / 回复 / 打标 / 关闭），并支持跨会话进度跟踪。所有对外可见的写操作（评论、标签、里程碑、关闭、转移、PR）一律先经用户审阅；项目级配置（标签列表、提交策略、收尾策略等）通过 agent 检索生成、用户审阅后的上下文卡（`project-context.md`）注入。
 
 ### [siyuan-skill](./siyuan-skill)
 
