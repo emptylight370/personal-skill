@@ -16,7 +16,7 @@ agent_created: true
 SiYuan Note provides a CLI (`siyuan`) to manage workspaces, notebooks, documents, blocks, and more.
 The binary must be available on `PATH` (verify with `siyuan --version`).
 
-> **CLI Version:** v3.8.4-alpha.4. Commands shown below reflect this version.
+> **CLI Version:** v3.8.4-alpha.5. Commands shown below reflect this version.
 
 > **Note:** If `siyuan` is not found on `PATH`, try `SiYuan-Kernel` as the alternative command name.
 
@@ -101,7 +101,7 @@ A list-item cannot directly contain another list-item. To nest lists, create a l
 The `--path`/`--hpath` parameter in `document create`/`move`/`list` refers to the **title-based path** shown in the document tree (e.g. `/Diary/2024/June`), not the internal ID-based filesystem path. Renaming a document changes its hPath but not its ID.
 
 ### block update — Replace, Not Append
-`block update` replaces **ONE** block's entire content with new markdown. It does NOT create or append new blocks. To both modify existing content and add new content, call `block update` first, then `block append`/`prepend`/`insert` as separate calls.
+`block update` replaces **ONE** block's entire content with new markdown. It does NOT create or append new blocks. To both modify existing content and add new content, call `block update` first, then `block append`/`prepend`/`insert` as separate calls. Pass `--lock-type` to reject the update when the parsed block type of the new content differs from the existing block's type.
 
 ### document move vs block move
 `document move` relocates an entire document (and all its children) to a new hPath within a notebook. `block move` repositions a single content block under a new parent block.

@@ -1,6 +1,6 @@
 # SiYuan CLI — Full Command Reference
 
-Auto-generated from `siyuan --help` output (v3.8.4-alpha.4).
+Auto-generated from `siyuan --help` output (v3.8.4-alpha.5).
 
 ---
 
@@ -56,7 +56,7 @@ siyuan notebook [command] -w <path>
 | `close` | `--id <id>` | Close a notebook |
 | `rename` | `--id <id> --name <name>` | Rename a notebook |
 | `remove` | `--id <id>` | Remove a notebook |
-| `set-icon --id <id> --icon <icon>` | `--id <id>` `--icon <icon>` | Set a notebook icon (emoji hex codepoint, emoji char, image path, or dynamic icon URL) |
+| `set-icon --id <id> --icon <icon>` | `--id <id>` `--icon <icon>` | Set a notebook icon (emoji hex codepoint, emoji char, image path, network image URL, or dynamic icon URL) |
 | `random-icon [--id <id>]` | `--id <id>` (optional; omit to update all notebooks) | Randomly set notebook icon(s) from built-in emojis |
 
 ---
@@ -97,7 +97,7 @@ siyuan block [command] -w <path>
 | `append --parent <id>` | `--parent <id>` `--data <md>` `--file <path>` | Append block |
 | `prepend --parent <id>` | `--parent <id>` `--data <md>` `--file <path>` | Prepend block |
 | `stat --id <id>` | `--id <id>` | Get block content statistics |
-| `update --id <id>` | `--id <id>` `--data <md>` `--file <path>` | Update block |
+| `update --id <id>` | `--id <id>` `--data <md>` `--file <path>` `--lock-type` | Update block |
 | `delete --id <id>` | `--id <id>` | Delete block |
 | `move --id <id> --parent <id>` | `--id <id>` `--parent <id>` `--previous <id>` | Move block |
 | `dom --id <id>` | `--id <id>` | Get block DOM |
@@ -105,6 +105,8 @@ siyuan block [command] -w <path>
 | `breadcrumb --id <id>` | `--id <id>` | Get block breadcrumb |
 | `batch-get --ids <ids>` | `--ids <id1,id2,...>` | Batch get block info |
 | `batch-kramdown --ids <ids>` | `--ids <id1,id2,...>` | Batch get block kramdown |
+
+> `--lock-type` rejects the update when the parsed block type of the new content differs from the existing block's type.
 
 ### Example
 ```bash
@@ -151,7 +153,7 @@ Search blocks (default), semantic search, or search asset file contents (PDF/Wor
 | `--get-asset` | Get the full indexed content of one asset file; the query argument is treated as the asset path, e.g. `assets/foo.pdf` |
 | `-m, --method <int>` | Search method: 0=keyword 1=query-syntax 2=sql 3=regex 4=semantic (asset mode ignores 4=semantic; uses 0-3 with same meanings) |
 | `-t, --type <stringArray>` | Block type filter, repeatable (blocks mode only) |
-| `--subtype <stringArray>` | Block subtype filter, repeatable (blocks mode only) |
+| `--subtype <stringArray>` | Block subtype filter, repeatable (blocks mode only; as of v3.8.4-alpha.5 the CLI help text literally shows "(o u t)" — likely an upstream typo) |
 | `-n, --notebook <stringArray>` | Notebook ID filter (repeatable) |
 | `--path <stringArray>` | Path prefix filter (repeatable) |
 | `-o, --order-by <int>` | Order — blocks: 0=type 1=created-asc 2=created-desc 3=updated-asc 4=updated-desc 5=content 6=relevance-asc 7=relevance-desc; asset: 0=relevance-desc 1=relevance-asc 2=updated-asc 3=updated-desc |
@@ -215,7 +217,7 @@ siyuan import [command] -w <path>
 ### Subcommands
 | Command | Flags | Description |
 |---------|-------|-------------|
-| `md --file <path> --notebook <id>` | `--hpath <path>` `--path <path>` (default: /) | Import Markdown file or directory |
+| `md --file <path> --notebook <id>` | `--hpath <path>` `--path <path>` (parent internal path, with or without .sy suffix; default: /) | Import Markdown file or directory |
 | `sy --file <path> --notebook <id>` | `--hpath <path>` `--path <path>` (default: /) | Import .sy.zip archive |
 | `data --file <path>` | | Import data backup |
 
@@ -251,8 +253,8 @@ siyuan attr [command] -w <path>
 | `batch-get --ids <ids>` | `--ids <id1,id2,...>` | Batch get block attributes |
 
 ### Common Attributes for `attr set`
-- `icon` - Emoji hex codepoint (e.g. "1f4ca"), emoji character (e.g. "📊"), custom image path (e.g. "1/b3log.png"), or dynamic icon URL
-- `title-img` - CSS background-image format (e.g. 'background-image:url("assets/example.jpg")')
+- `icon` - Emoji hex codepoint (e.g. "1f4ca"), emoji character (e.g. "📊"), custom image path (e.g. "1/b3log.png"), network image URL (e.g. "https://example.com/icon.png"), or dynamic icon URL (e.g. "api/icon/getDynamicIcon?type=8&color=%23d23f31&content=SiYuan&id=xxx")
+- `title-img` - CSS background-image format (e.g. 'background-image:url("assets/example.jpg")'). DO NOT use a bare asset path.
 - `tags` - Comma-separated tag names
 
 ### Examples
@@ -316,7 +318,7 @@ siyuan history [command] -w <path>
 | `clear` | | Clear all history |
 
 ### History Type Values (`-t, --type`)
-0=doc-name 1=doc-content 2=asset 3=doc-id 4=database
+0=doc-name 1=doc-content 2=asset 3=doc-id 4=database (default 1 = doc-content)
 
 ### Operation Filter (`--op`)
 delete, update, create
@@ -398,7 +400,7 @@ siyuan database [command] -w <path>
 | `search <keyword>` | | Search databases by name |
 | `get --av <avID>` | `--av <avID>` (required) | Get database content |
 | `keys --av <avID>` | `--av <avID>` (required) | List database keys (fields) |
-| `render --av <avID>` | `--av <avID>` `-p, --page <int>` `-s, --size <int>` `--query <string>` `--view <viewID>` | Render database data |
+| `render --av <avID>` | `--av <avID>` `-p, --page <int>` `-s, --size <int>` (default 50) `--query <string>` (search within view) `--view <viewID>` (default: current view) | Render database data |
 | `unused` | | List unused databases |
 | `clean` | `--av <avID>` (optional, default: clean all) | Clean unused databases |
 
@@ -409,7 +411,7 @@ siyuan database [command] -w <path>
 | `key remove --av <avID> --key <keyID>` | `--av <avID>` `--key <keyID>` `--remove-relation-dest` | Remove a key (field) from database |
 
 ### Key Types (`--type`)
-block/text/number/date/select/mSelect/url/email/phone/mAsset/template/created/updated/checkbox/relation/rollup/lineNumber
+text/number/date/select/mSelect/url/email/phone/mAsset/template/created/updated/checkbox/relation/rollup/lineNumber
 
 ### database item — Nested Subcommands
 | Command | Flags | Description |
@@ -459,8 +461,8 @@ siyuan file [command] -w <path>
 | `copy <src> <dst>` | | Copy file or directory |
 | `rename <old> <new>` | | Rename or move file |
 | `delete <path>` | | Delete file or directory |
-| `find <path>` | `--include <glob>` `--limit <int>` (default: 200) | Find files under a path |
-| `grep --pattern <regex> --path <path>` | `--pattern <regex>` `--path <path>` `--context <int>` `--include <glob>` `--limit <int>` (default: 200) | Search file contents with regex |
+| `find <path>` | `--include <glob>` `--limit <int>` (default: 200; 0 or negative = unlimited) | Find files under a path |
+| `grep --pattern <regex> --path <path>` | `--pattern <regex>` `--path <path>` `--context <int>` `--include <glob>` `--limit <int>` (default: 200; 0 or negative = unlimited) | Search file contents with regex |
 | `stat <path>` | | Show file or directory info |
 
 ---
