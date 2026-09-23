@@ -4,6 +4,10 @@
 
 这是一个**纯 Markdown 的个人 Skill 集合仓库**，没有任何代码构建、测试或 lint 流程。所有"开发"工作都是编写和维护 skill 文档。提交信息使用中文，遵循仓库现有风格。
 
+## 文件操作工具优先级
+
+获取目录下文件列表、删除文件等文件操作，**优先使用 CodeBuddy 内置工具**（`list_dir`、`search_file`、`search_content`、`read_file`、`delete_file` 等），而不是通过终端执行 `ls`、`Get-ChildItem`、`Remove-Item` 之类的 shell 命令。仅当内置工具无法满足需求时（如需要批量重命名、权限修改等），才回退到终端命令。
+
 ## GitHub 访问方式
 
 访问 GitHub（查询 repo、release、issue、PR 等）时，**优先使用本地安装的 `gh` 命令行工具**，默认断言其处于登录状态，无需事先检查认证。如果某次 `gh` 调用失败，先检查命令本身（参数、网络等）并重试；重试两次后仍失败，才回退到直接调用 GitHub API（如 `Invoke-RestMethod https://api.github.com/...`）。
@@ -60,7 +64,8 @@ personal-skill/
 
 ### 新增/修改 skill 的完整流程
 
-1. `init_skill.py` 生成骨架 → 编写 SKILL.md 与 references；
-2. `quick_validate.py` 校验通过；
-3. **同步更新 `README.md` 的 Skill 列表**（这是本仓库最容易遗漏的步骤）；
-4. 在 `docs/` 创建同名设计文档（中文），说明设计原则、流程与落地形态。
+1. （可选前置）**生成临时设计文档**：当需求较复杂或尚未明确时，先在 `docs/` 下创建同名设计文档草稿（中文），梳理设计原则、流程与落地形态，确认后再进入下一步；
+2. `init_skill.py` 生成骨架 → 编写 SKILL.md 与 references；
+3. `quick_validate.py` 校验通过；
+4. **同步更新 `README.md` 的 Skill 列表**（这是本仓库最容易遗漏的步骤）；
+5. 在 `docs/` 创建同名设计文档（中文），说明设计原则、流程与落地形态。
