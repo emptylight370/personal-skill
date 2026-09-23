@@ -1,11 +1,6 @@
 ---
 name: siyuan-skill
-description: >
-  Operate SiYuan Note CLI (siyuan) to manage workspaces, notebooks, documents, blocks, SQL queries,
-  search, export/import, assets, attributes, bookmarks, tags, history, refs, repo snapshots, sync, serve,
-  database attribute views, templates, outlines, and system info. Use this skill when the user mentions
-  SiYuan, 思源笔记, or asks to query/manipulate SiYuan data via CLI. The skill enforces the correct
-  workflow: discover workspaces first, then target a specific workspace for all subsequent commands.
+description: Operate SiYuan Note CLI (siyuan) to manage workspaces, notebooks, documents, blocks, SQL queries, search, export/import, assets, attributes, bookmarks, tags, history, refs, repo snapshots, sync, serve, database attribute views, templates, outlines, and system info. Use this skill when the user mentions SiYuan, 思源笔记, or asks to query/manipulate SiYuan data via CLI. The skill enforces the correct workflow: discover workspaces first, then target a specific workspace for all subsequent commands.
 agent_created: true
 ---
 
@@ -16,7 +11,7 @@ agent_created: true
 SiYuan Note provides a CLI (`siyuan`) to manage workspaces, notebooks, documents, blocks, and more.
 The binary must be available on `PATH` (verify with `siyuan --version`).
 
-> **CLI Version:** v3.8.4-alpha.5. Commands shown below reflect this version.
+> **CLI Version:** v3.8.6-alpha.1. Commands shown below reflect this version.
 
 > **Note:** If `siyuan` is not found on `PATH`, try `SiYuan-Kernel` as the alternative command name.
 
@@ -85,8 +80,10 @@ Understanding these SiYuan-specific concepts is essential for correct CLI usage:
 ### Block — The Fundamental Unit
 Everything is a block with a unique ID. A document is a document block (type `d`, i.e. NodeDocument) that serves as the root; content blocks (headings, paragraphs, lists, code, tables) form a tree beneath it.
 
-**Container blocks** (can hold child blocks, valid as `--parent`): document, blockquote, list, list-item, super-block, callout.
+**Container blocks** (can hold child blocks, valid as `--parent`): document, blockquote, list, list-item, super-block, callout, tabs, tab-item.
 **Leaf blocks** (cannot hold children, invalid as `--parent`): heading, paragraph, code-block, math-block, table, HTML-block, thematic-break, video, audio, widget, iframe, attribute-view, block-query-embed.
+
+> `tabs`/`tab-item` are the block types introduced for tabbed containers; they appear in the `search -t` type filter list as `tabs` and `tabItem`.
 
 ### Heading Hierarchy — Use `--previous`, Not `--parent`
 Headings (h1-h6) are **leaf blocks**. Blocks that appear "under" a heading in the UI are its *following siblings* in the AST, not its children. To insert a block below a heading, pass the heading's ID (or the ID of the last block currently below it) as `--previous`, **not** as `--parent`:

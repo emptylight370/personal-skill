@@ -1,6 +1,6 @@
 # SiYuan CLI — Full Command Reference
 
-Auto-generated from `siyuan --help` output (v3.8.4-alpha.5).
+Auto-generated from `siyuan --help` output (v3.8.6-alpha.1).
 
 ---
 
@@ -153,7 +153,7 @@ Search blocks (default), semantic search, or search asset file contents (PDF/Wor
 | `--get-asset` | Get the full indexed content of one asset file; the query argument is treated as the asset path, e.g. `assets/foo.pdf` |
 | `-m, --method <int>` | Search method: 0=keyword 1=query-syntax 2=sql 3=regex 4=semantic (asset mode ignores 4=semantic; uses 0-3 with same meanings) |
 | `-t, --type <stringArray>` | Block type filter, repeatable (blocks mode only) |
-| `--subtype <stringArray>` | Block subtype filter, repeatable (blocks mode only; as of v3.8.4-alpha.5 the CLI help text literally shows "(o u t)" — likely an upstream typo) |
+| `--subtype <stringArray>` | Block subtype filter, repeatable (blocks mode only): h1-h6, list:o, list:u, list:t, listItem:o, listItem:u, listItem:t |
 | `-n, --notebook <stringArray>` | Notebook ID filter (repeatable) |
 | `--path <stringArray>` | Path prefix filter (repeatable) |
 | `-o, --order-by <int>` | Order — blocks: 0=type 1=created-asc 2=created-desc 3=updated-asc 4=updated-desc 5=content 6=relevance-asc 7=relevance-desc; asset: 0=relevance-desc 1=relevance-asc 2=updated-asc 3=updated-desc |
@@ -164,7 +164,7 @@ Search blocks (default), semantic search, or search asset file contents (PDF/Wor
 > **Note:** `-m 4` (semantic search) requires an embedding model to be configured in SiYuan settings and embeddings to be generated before use. If results are empty or an error occurs, prompt the user to configure the embedding model first.
 
 ### Block Types for `-t` (blocks mode only)
-`document heading paragraph list listItem codeBlock mathBlock table blockquote superBlock htmlBlock embedBlock databaseBlock audioBlock videoBlock iframeBlock widgetBlock callout`
+`document heading paragraph list listItem codeBlock mathBlock table blockquote superBlock htmlBlock embedBlock databaseBlock audioBlock videoBlock iframeBlock widgetBlock callout tabs tabItem`
 
 ### Example
 ```bash
@@ -353,7 +353,7 @@ siyuan repo [command] -w <path>
 | Command | Flags | Description |
 |---------|-------|-------------|
 | `list` | `-p, --page <int>` `--tag` (tagged only) | List snapshots |
-| `create` | `--memo <string>` | Create a snapshot |
+| `create` | `--memo <string>` (default: `Create manually`) | Create a snapshot |
 | `diff --left <id> --right <id>` | `--left <id>` `--right <id>` | Diff two snapshots |
 | `checkout --id <id>` | `--id <id>` | Checkout (rollback to) a snapshot |
 | `tag --id <id> --name <name>` | `--id <id>` `--name <name>` | Tag a snapshot |
@@ -400,7 +400,7 @@ siyuan database [command] -w <path>
 | `search <keyword>` | | Search databases by name |
 | `get --av <avID>` | `--av <avID>` (required) | Get database content |
 | `keys --av <avID>` | `--av <avID>` (required) | List database keys (fields) |
-| `render --av <avID>` | `--av <avID>` `-p, --page <int>` `-s, --size <int>` (default 50) `--query <string>` (search within view) `--view <viewID>` (default: current view) | Render database data |
+| `render --av <avID>` | `--av <avID>` `-p, --page <int>` (default 1) `-s, --size <int>` (default 50) `--query <string>` (search within view) `--view <viewID>` (default: current view) | Render database data |
 | `unused` | | List unused databases |
 | `clean` | `--av <avID>` (optional, default: clean all) | Clean unused databases |
 
@@ -543,10 +543,10 @@ Starts the SiYuan kernel HTTP server. All serving-related options below are pass
 | `--accessAuthCode <string>` | Access auth code |
 | `--attach-ui` | Attach kernel lifecycle to desktop UI process (used by Electron) |
 | `--enable-pprof` | Register unauthenticated /debug/pprof/ endpoints exposing process memory dumps (dev only, never enable on a network-exposed instance) |
-| `--lang <string>` | Language: ar/de/en/es/fr/he/hi/id/it/ja/ko/nl/pl/pt-BR/ru/sk/th/tr/uk/zh-CN/zh-TW |
+| `--lang <string>` | Language: ar/de/en/es/fr/he/hi/id/it/ja/ko/nl/pl/pt-BR/ru/sk/sr/th/tr/uk/zh-CN/zh-TW |
 | `--mode <string>` | Run mode: dev/prod (non-prod values must not be used on network-exposed instances) (default "prod") |
 | `--port <string>` | Port of the HTTP server (default "0" = auto) |
-| `--readonly <string>` | Read-only mode: true/false (default "false") |
+| `--readonly <string>` | Read-only mode (default "false") |
 | `--ssl` | Enable HTTPS and WSS |
 | `--safe-mode` | Boot in safe mode |
 | `--wd <string>` | Working directory of SiYuan |
