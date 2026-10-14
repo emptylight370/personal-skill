@@ -1,6 +1,6 @@
 # SiYuan CLI — Full Command Reference
 
-Auto-generated from `siyuan --help` output (v3.8.6-alpha.1).
+Auto-generated from `siyuan --help` output (v3.8.7).
 
 ---
 
@@ -16,6 +16,7 @@ These flags are available on every subcommand (global flags):
 | `--version` | Print version |
 | `-w, --workspace <path>` | Workspace path (required for all commands except `workspace`) |
 | `--dry-run` | Dry run mode: validate and print what would happen without making changes |
+| `--home-dir <path>` | Base directory for user configuration (defaults to the system user home) |
 
 > **Note:** All global flags except `-w` (or `--workspace`) are optional. The CLI will use default values if optional flags are not specified.
 

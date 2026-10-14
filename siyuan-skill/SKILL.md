@@ -11,7 +11,7 @@ agent_created: true
 SiYuan Note provides a CLI (`siyuan`) to manage workspaces, notebooks, documents, blocks, and more.
 The binary must be available on `PATH` (verify with `siyuan --version`).
 
-> **CLI Version:** v3.8.6-alpha.1. Commands shown below reflect this version.
+> **CLI Version:** v3.8.7. Commands shown below reflect this version.
 
 > **Note:** If `siyuan` is not found on `PATH`, try `SiYuan-Kernel` as the alternative command name.
 
@@ -119,6 +119,7 @@ These flags are available on every subcommand:
 | `-f, --format <table\|json>` | Output format (default: `table`) |
 | `-v, --log-level <string>` | Log level: off | trace | debug | info | warn | error | fatal (defaults to conf.json system.logLevel) |
 | `--dry-run` | Validate and print what would happen without making changes |
+| `--home-dir <path>` | Base directory for user configuration (defaults to the system user home) |
 
 > **Note:** All flags except `-w` (or `--workspace`) are optional. The CLI will use default values if optional flags are not specified.
 
