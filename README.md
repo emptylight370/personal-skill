@@ -55,6 +55,10 @@ cp -r /tmp/personal-skill/siyuan-skill <project>/.agents/skills/
 
 ## Skill 列表
 
+### [cnb-pipeline](./cnb-pipeline)
+
+编写、修改、审查 CNB 云原生构建的 `.cnb.yml` 流水线配置：分支/事件触发、Pipeline/Stage/Job 结构、三链语义（stages/failStages/endStages）、内置任务（`type`）、插件任务（`image` + `settings`）、环境变量、缓存、定时任务、自托管 Runner 调度与 Monorepo 编排模式。纯编写型 skill，不依赖 CNB 平台凭证与 CLI；平台事实（字段/事件/变量/插件参数）一律按 `references/doc-index.md` 的路由表在线查官方文档（docs.cnb.cool），不在本地维护会过期的字段快照。
+
 ### [issue-triage](./issue-triage)
 
 对 GitHub 仓库的 issue 进行分诊与处置：拉取列表、生成摘要与初步分类建议、呈现决策卡片，由用户开放性决定处置方式（自行修改或指导 agent 修改）后执行（改码 / 回复 / 打标 / 关闭），并支持跨会话进度跟踪。所有对外可见的写操作（评论、标签、里程碑、关闭、转移、PR）一律先经用户审阅；项目级配置（标签列表、提交策略、收尾策略等）通过 agent 检索生成、用户审阅后的上下文卡（`project-context.md`）注入。
