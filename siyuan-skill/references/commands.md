@@ -1,6 +1,6 @@
 # SiYuan CLI — Full Command Reference
 
-Auto-generated from `siyuan --help` output (v3.8.7).
+Auto-generated from `siyuan --help` output (v3.8.9).
 
 ---
 
@@ -409,10 +409,10 @@ siyuan database [command] -w <path>
 | Command | Flags | Description |
 |---------|-------|-------------|
 | `key add --av <avID> --name <name> --type <type>` | `--av <avID>` `--name <name>` `--type <type>` `--icon <icon>` `--prev <prevKeyID>` | Add a key (field) to database |
-| `key remove --av <avID> --key <keyID>` | `--av <avID>` `--key <keyID>` `--remove-relation-dest` | Remove a key (field) from database |
+| `key remove --av <avID> --key <keyID>` | `--av <avID>` `--key <keyID>` `--remove-relation-dest` (also remove related data in linked databases) | Remove a key (field) from database |
 
 ### Key Types (`--type`)
-text/number/date/select/mSelect/url/email/phone/mAsset/template/created/updated/checkbox/relation/rollup/lineNumber
+text/number/date/select/mSelect/url/email/phone/location/mAsset/template/created/updated/checkbox/relation/rollup/lineNumber
 
 ### database item — Nested Subcommands
 | Command | Flags | Description |
